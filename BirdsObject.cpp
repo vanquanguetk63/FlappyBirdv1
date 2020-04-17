@@ -56,7 +56,7 @@ void BirdsObject::set_clip (){
 
 void BirdsObject::Show (SDL_Renderer* des){
 
-	if (stayed == false && isDied == false){
+	if (stayed == false && isDied == false && inputType.up == 1){
 		frame++;
 	}
 	
