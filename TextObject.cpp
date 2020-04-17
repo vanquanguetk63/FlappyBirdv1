@@ -55,36 +55,36 @@ void TextObject::setRectText(int numberText){
 	switch (numberText)
 	{
 	case 0: 
-		posText[0].x = SCREEN_WIDTH/2-145;
-		posText[0].y = SCREEN_HEIGHT/2-225;
+		posText[MENU].x = X_MENU;
+		posText[MENU].y = Y_MENU;
 		break;
 	case 1: 
-		posText[1].x = 5;
-		posText[1].y = 0;
+		posText[SCORE].x = X_SCORE;
+		posText[SCORE].y = Y_SCORE;
 		break;
 	case 2: 
-		posText[2].x = 260;
-		posText[2].y = 50;
+		posText[OVER].x = X_OVER;
+		posText[OVER].y = Y_OVER;
 		break;
 	case 3: 
-		posText[3].x = 490;
-		posText[3].y = 180;
+		posText[SCOREFINAL].x = X_SCOREFINAL;
+		posText[SCOREFINAL].y = Y_SCOREFINAL;
 		break;
 	case 4: 
-		posText[4].x = 490;
-		posText[4].y = 250;
+		posText[BEST].x = X_BEST;
+		posText[BEST].y = Y_BEST;
 		break;
 	case 5: 
-		posText[5].x = 380;
-		posText[5].y = 230;
+		posText[BEST1].x = X_BEST1;
+		posText[BEST1].y = Y_BEST1;
 		break;
 	case 6: 
-		posText[6].x = 380;
-		posText[6].y = 275;
+		posText[BEST2].x = X_BEST2;
+		posText[BEST2].y = Y_BEST2;
 		break;
 	case 7: 
-		posText[7].x = 380;
-		posText[7].y = 320;
+		posText[BEST3].x = X_BEST3;
+		posText[BEST3].y = Y_BEST3;
 		break;
 		
 	default:

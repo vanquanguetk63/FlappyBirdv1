@@ -32,7 +32,7 @@ private:
 	SDL_Texture*  texture;
 	int width;
 	int height;
-	SDL_Rect posText[8];	
+	SDL_Rect posText[totalText];	
 };
 
 #endif

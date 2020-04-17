@@ -7,15 +7,17 @@
 #include "TextObject.h"
 #include "MenuGame.h"
 
-
 GameBase gBackground;
 MenuGame gMenu;
 ImpTimer gControl;
 BirdsObject gBirds;
 std::vector<ThreatsObject*> gListChimney;
-TextObject textScreen[8];
+TextObject textScreen[totalText];
 TTF_Font* gFont;
 
+int Score = 0;
+int Best = 0;
+int BestPoins[totalRank];
 bool game_over = false;
 
 bool Init(); 
@@ -62,8 +64,10 @@ int main(int argc, char* argv[])
 	ground2.setPosxy (GROUND_POS_X2,GROUND_POS_Y);
 	//Text
 	LoadMedia (BIG_SIZE_FONT);
-	textScreen[0].SetText (textMenu);
-	textScreen[0].LoadFromRenderText (gFont,g_screen);
+	textScreen[MENU].SetText (textMenu);
+	textScreen[MENU].LoadFromRenderText (gFont,g_screen);
+	textScreen[OVER].SetText (textOver);
+	textScreen[OVER].LoadFromRenderText (gFont,g_screen);
 	
 	bool isQuit = false;
 	while (!isQuit){
@@ -81,15 +85,16 @@ int main(int argc, char* argv[])
 		gBackground.Render (g_screen,NULL); 	//RENDER ANH BACKGROUND
 		fpsTimer.start ();					//chay thoi gian
 		if (gControl.is_started ()){ 		//RENDER VA UPDATE CAC DOI TUONG 
-			for (int i=0;i<10;i++){
-				ThreatsObject* gChimney = gListChimney.at (i);
+			for (int num=0;num<AMOUNT_OF_CHIMNEY;num++){
+				ThreatsObject* gChimney = gListChimney.at (num);
 				if (gChimney!=NULL){
 					if (game_over == false ){
 						SDL_Rect rectBirds = gBirds.GetRectFrame ();
 						SDL_Rect rectChimney = gChimney->GetRectFrame ();
 						gChimney->UpdateChimney ();
-						if (i%2==0){
+						if (num%2==0){
 							checkPoint(rectBirds,rectChimney);
+							
 						}
 						bool check = SDLInitfunction::CheckCollision (rectBirds,rectChimney);
 						if (check){
@@ -99,6 +104,12 @@ int main(int argc, char* argv[])
 							Save ();
 							SDL_Delay (TIME_DELAY_WHEN_DIE);
 						}
+						std::string textScore = "SCORE ";
+						std::string score = std::to_string (Score);
+						textScore += score;
+						textScreen[SCORE].SetText (textScore);
+						textScreen[SCORE].LoadFromRenderText (gFont,g_screen);
+						textScreen[SCORE].Render (g_screen,SCORE);
 					} 
 					if (gBirds.getStay () == false){
 						gChimney->Render (g_screen,NULL);
@@ -111,10 +122,11 @@ int main(int argc, char* argv[])
 				Mix_PlayChannel(-1,gSoundFly,0);
 				gBirds.setFly (false);
 			}
+			
 		}
 		else 
 		{
-			textScreen[0].Render(g_screen,0);
+			textScreen[MENU].Render(g_screen,MENU);
 			gMenu.render_Clip (g_screen,MENUPOS);
 		}
 		ground1.UpdateGround ();
@@ -142,10 +154,41 @@ int main(int argc, char* argv[])
 			{
 				gMenu.render_Clip (g_screen,BESTSCORE);
 			}
-				
+			
+			
+			textScreen[OVER].Render (g_screen,OVER);
+
+			std::string scoreFinal = std::to_string (Score);
+			textScreen[SCOREFINAL].SetText (scoreFinal);
+			textScreen[SCOREFINAL].LoadFromRenderText (gFont,g_screen);
+			textScreen[SCOREFINAL].Render (g_screen,SCOREFINAL);
+
+			std::string best_ = std::to_string (Best);
+			textScreen[BEST].SetText (best_);
+			textScreen[BEST].LoadFromRenderText (gFont,g_screen);
+			textScreen[BEST].Render (g_screen,BEST);
+
 			if (gMenu.getPress () == true){
 				gMenu.render_Clip (g_screen,BOARD);
 				LoadMedia (SMALL_SIZE_FONT);
+
+				std::string Best1 = std::to_string (BestPoins[rank1]);
+				Best1+=textPTS;
+				textScreen[BEST1].SetText (Best1);
+				textScreen[BEST1].LoadFromRenderText (gFont,g_screen);
+				textScreen[BEST1].Render (g_screen,BEST1);	
+
+				std::string Best2 = std::to_string (BestPoins[rank2]);
+				Best2+=textPTS;
+				textScreen[BEST2].SetText (Best2);
+				textScreen[BEST2].LoadFromRenderText (gFont,g_screen);
+				textScreen[BEST2].Render (g_screen,BEST2);	
+
+				std::string Best3 = std::to_string (BestPoins[rank3]);
+				Best3+=textPTS;
+				textScreen[BEST3].SetText (Best3);
+				textScreen[BEST3].LoadFromRenderText (gFont,g_screen);
+				textScreen[BEST3].Render (g_screen,BEST3);	
 			}
 		}
 		SDL_RenderPresent (g_screen);
@@ -159,8 +202,6 @@ int main(int argc, char* argv[])
 	Close ();
 	return 0;
 }
-
-
 
 bool Init(){
 	bool success = true;
@@ -210,6 +251,17 @@ bool loadBackground(){
 	return true;
 }
 
+bool InitObject(){
+	BestPlayer ();
+	gBirds.SetRect (POSX_START,POSY_START);
+	gBirds.LoadImg ("img/bird_sprite.png", g_screen);
+	gBirds.set_clip ();
+	gListChimney = CreatListChimney(); 
+	if (gListChimney.size ()==0)
+		return false;
+	return true;
+}
+
 std::vector<ThreatsObject*> CreatListChimney()
 {
 	std::vector<ThreatsObject*> listChimney;
@@ -242,77 +294,6 @@ void InitChimney(ThreatsObject* gChimney,ThreatsObject* gChimney2,int numChimney
 	gChimney2->setPosY (POSY0_CHIMNEY_BELOW+POSY_MOVE_CHIMNEY*moveY);
 }
 
-void Close(){
-	gBackground.Free ();
-	gMenu.Free ();
-	SDL_DestroyRenderer (g_screen);
-	g_screen = NULL;
-	SDL_DestroyWindow (g_window);
-	g_window = NULL;
-	IMG_Quit ();
-	SDL_Quit();
-}
-
-bool LoadMedia (int size){
-	gFont = TTF_OpenFont ("font/FB.ttf",size);
-	if (gFont==NULL)
-		return false;
-	return true;
-}
-void checkPoint(SDL_Rect rectBirds,SDL_Rect rectChimney){
-	if (rectChimney.x == rectBirds.x){
-		Score++;
-		Mix_PlayChannel(-1, gSoundScore,0);
-	}
-}
-
-void BestPlayer (){
-	std::ifstream pfile;
-	pfile.open ("Best.txt");
-	for (int i=0;i<3;i++){
-		pfile >> BestPoins[i];
-	}
-	pfile.close ();
-	std::sort(BestPoins,BestPoins+2);
-	Best = BestPoins[2];
-}
-
-void AddPoints(){
-	if (Score >= BestPoins[2]){
-		BestPoins[0] = BestPoins[1];
-		BestPoins[1] = BestPoins[2];
-		BestPoins[2] = Score;
-	}
-	else if (Score >= BestPoins[1]){
-		BestPoins[0] = BestPoins[1];
-		BestPoins[1] = Score;
-	}
-	else if (Score >= BestPoins[0]) BestPoins [0] = Score;
-}
-
-void Save(){
-	AddPoints();
-	std::ofstream pfileout;
-	pfileout.open ("Best.txt");
-	for (int i=0;i<3;i++){
-		pfileout << BestPoins[i];
-		pfileout << " ";
-	}
-	pfileout.close ();
-}
-
-
-bool InitObject(){
-	BestPlayer ();
-	gBirds.SetRect (POSX_START,POSY_START);
-	gBirds.LoadImg ("img/bird_sprite.png", g_screen);
-	gBirds.set_clip ();
-	gListChimney = CreatListChimney(); 
-	if (gListChimney.size ()==0)
-		return false;
-	return true;
-}
-
 void HandleEventMenu(SDL_Event g_event,SDL_Renderer* g_screen){
 	if (g_event.type == SDL_KEYDOWN){
 		switch (g_event.key.keysym.sym ){
@@ -328,7 +309,6 @@ void HandleEventMenu(SDL_Event g_event,SDL_Renderer* g_screen){
 			break;
 		}
 	}
-
 	if (g_event.type == SDL_MOUSEBUTTONDOWN){
 		if (g_event.button.button == SDL_BUTTON_LEFT && game_over == true ){
 			if (gMenu.Motion (g_event,RESTART) == true ){
@@ -346,7 +326,6 @@ void HandleEventMenu(SDL_Event g_event,SDL_Renderer* g_screen){
 			}
 		}
 	}
-
 	if (g_event.type == SDL_MOUSEMOTION && game_over == true){
 		if (gMenu.Motion(g_event, RESTART) == true ){
 			gMenu.setEffect (true);
@@ -363,8 +342,68 @@ void HandleEventMenu(SDL_Event g_event,SDL_Renderer* g_screen){
 	}
 }
 
+void checkPoint(SDL_Rect rectBirds,SDL_Rect rectChimney){
+	if (rectChimney.x == rectBirds.x){
+		Score++;
+		Mix_PlayChannel(-1, gSoundScore,0);
 
+	}
 
+}
 
+bool LoadMedia (int size){
+	gFont = TTF_OpenFont ("font/FB.ttf",size);
+	if (gFont==NULL)
+		return false;
+	return true;
+}
+
+void BestPlayer (){
+	std::ifstream pfile;
+	pfile.open ("Best.txt");
+	for (int i=0;i<3;i++){
+		pfile >> BestPoins[i];
+	}
+	pfile.close ();
+	std::sort(BestPoins,BestPoins+2);
+	Best = BestPoins[2];
+}
+
+void AddPoints(){
+	if (Score == BestPoins[2] || Score ==BestPoins[1] || Score == BestPoins[0] )
+		return;
+	if (Score > BestPoins[2]){
+		BestPoins[0] = BestPoins[1];
+		BestPoins[1] = BestPoins[2];
+		BestPoins[2] = Score;
+	}
+	else if (Score > BestPoins[1]){
+		BestPoins[0] = BestPoins[1];
+		BestPoins[1] = Score;
+	}
+	else if (Score > BestPoins[0]) BestPoins [0] = Score;
+}
+
+void Save(){
+	AddPoints();
+	std::ofstream pfileout;
+	pfileout.open ("Best.txt");
+	for (int i=0;i<3;i++){
+		pfileout << BestPoins[i];
+		pfileout << " ";
+	}
+	pfileout.close ();
+}
+
+void Close(){
+	gBackground.Free ();
+	gMenu.Free ();
+	SDL_DestroyRenderer (g_screen);
+	g_screen = NULL;
+	SDL_DestroyWindow (g_window);
+	g_window = NULL;
+	IMG_Quit ();
+	SDL_Quit();
+}
 
 

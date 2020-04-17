@@ -52,13 +52,6 @@ const int TIME_DELAY_WHEN_DIE = 200;
 const int BIG_SIZE_FONT = 50;
 const int SMALL_SIZE_FONT  = 35;
 
-static int Score = 0;
-static int Best = 0;
-static int BestPoins[3];
-
-//TEXT
-const std::string textMenu = "FLAPPY BIRD";
-const std::string textScore = "Score";
 //EVENT MOUSE
 const int UNPRESSED = 0;
 const int PRESSED = 1;
@@ -98,8 +91,60 @@ enum MOVE_Y_POSITION
 
 };
 const int ARRAYMOVEY[ARRAY_MOVE_NUM] = {ARRAY_MOVE_POS1,ARRAY_MOVE_POS2,
-										ARRAY_MOVE_POS3,ARRAY_MOVE_POS4,
-ARRAY_MOVE_POS5}; 
+	ARRAY_MOVE_POS3,ARRAY_MOVE_POS4,
+	ARRAY_MOVE_POS5}; 
+
+
+
+//TEXT
+const std::string textMenu = "FLAPPY BIRD";
+const std::string textOver = "GAMEOVER";
+const std::string textPTS = " ptS";
+const int totalText = 8;
+enum textOBJ
+{
+	MENU = 0,
+	SCORE = 1,
+	OVER = 2,
+	SCOREFINAL = 3,
+	BEST = 4,
+	BEST1 = 5,
+	BEST2 = 6,
+	BEST3 = 7,
+};
+//RECT TEXT
+const int X_MENU = SCREEN_WIDTH/2-145;
+const int Y_MENU = SCREEN_HEIGHT/2-225;
+
+const int X_SCORE = 5;
+const int Y_SCORE = 0;
+
+const int X_OVER = 260;
+const int Y_OVER = 50;
+
+const int X_SCOREFINAL = 490;
+const int Y_SCOREFINAL = 170;
+
+const int X_BEST = 490;
+const int Y_BEST = 257; 
+
+const int X_BEST1 = 380;
+const int Y_BEST1 = 230;
+
+const int X_BEST2 = 380;
+const int Y_BEST2 = 275;
+
+const int X_BEST3 = 380;
+const int Y_BEST3 = 320;
+
+//BEST
+const int totalRank = 3;
+enum Rank
+{
+	rank1 = 2,
+	rank2 = 1,
+	rank3 = 0,
+};
 
 typedef struct Input{
 	int up;
