@@ -9,19 +9,10 @@ public:
 	TextObject();
 	~TextObject();
 
-	enum textColor
-	{
-		RED_TEXT = 0,
-		WHITE_TEXT = 1,
-		BLACK_TEXT = 2,
-		YELLOW_TEXT = 3,
-	};
-
 	bool loadMedia(std::string path);
 	bool LoadFromRenderText(TTF_Font* gFont, SDL_Renderer* screen);
 	void Free();
 	void setColor(Uint8 red,Uint8 green, Uint8 blue);
-	void setColor(int type);
 
 	void Render(SDL_Renderer* screen, 
 				int numberText, SDL_Rect* clip = NULL,

@@ -10,27 +10,23 @@
 
 GameBase gBackground;
 MenuGame gMenu;
+ImpTimer gControl;
 BirdsObject gBirds;
 std::vector<ThreatsObject*> gListChimney;
-ImpTimer gControl;
 TextObject textScreen[8];
 TTF_Font* gFont;
 
 bool game_over = false;
 
-
-//Khoi tao man hinh,tao Font,Audio, vv
 bool Init(); 
-//Load Anh nen
+
 bool loadBackground();
-//Tao danh sach chimney
+
 std::vector<ThreatsObject*> CreatListChimney();
-//Dong Cua so
-void Close();
 
-void InitObject();
+bool InitObject();
 
-void InitChimney(ThreatsObject* gChimney,ThreatsObject* gChimney2,int index);
+void InitChimney(ThreatsObject* gChimney,ThreatsObject* gChimney2,int numChimney);
 
 bool LoadMedia(int size);
 
@@ -42,37 +38,33 @@ void HandleEventMenu (SDL_Event g_event,SDL_Renderer* g_screen);
 
 void Save();
 
+void Close();
+
 int main(int argc, char* argv[])
 {
-	
-	//TAO OBJECT THOI GIAN
 	ImpTimer fpsTimer;
 
-	if (Init () == false)
+	if (!Init ())
 		return -1;
-	if (loadBackground () == false)
+	if (!loadBackground ())
 		return -1;
-	if (LoadMedia (50) == false)
+	if (!LoadMedia (BIG_SIZE_FONT))
 		return -1;
-
-	gMenu.LoadImg ("img/GameMenu.png",g_screen);
+	if (!InitObject())
+		return -1;
+	gMenu.LoadImg ("img/GameMenu.png",g_screen); //Load Menu
 	gMenu.setClip ();
-
-	InitObject();
-
-	ThreatsObject ground1;
+	ThreatsObject ground1;	//Load ground
 	ThreatsObject ground2;
 	ground1.LoadImgground ("img/ground.png",g_screen);
 	ground1.setPosxy (GROUND_POS_X1,GROUND_POS_Y);
 	ground2.LoadImgground ("img/ground.png",g_screen);
 	ground2.setPosxy (GROUND_POS_X2,GROUND_POS_Y);
-
-
 	//Text
-	textScreen[0].SetText ("HELOO");
-	textScreen[0].LoadFromRenderText (gFont, g_screen);
+	LoadMedia (BIG_SIZE_FONT);
+	textScreen[0].SetText (textMenu);
+	textScreen[0].LoadFromRenderText (gFont,g_screen);
 	
-
 	bool isQuit = false;
 	while (!isQuit){
 		// Su kien ban phim
@@ -84,17 +76,11 @@ int main(int argc, char* argv[])
 			HandleEventMenu (g_event,g_screen);
 			gBirds.HandleInputAction (g_event,g_screen);
 		}
-
 		SDL_SetRenderDrawColor (g_screen,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR);
 		SDL_RenderClear (g_screen);
-		//RENDER ANH BACKGROUND
-		gBackground.Render (g_screen,NULL);
-
-		
-		fpsTimer.start ();
-
-		if (gControl.is_started ()){
-			//RENDER VA UPDATE CAC DOI TUONG 
+		gBackground.Render (g_screen,NULL); 	//RENDER ANH BACKGROUND
+		fpsTimer.start ();					//chay thoi gian
+		if (gControl.is_started ()){ 		//RENDER VA UPDATE CAC DOI TUONG 
 			for (int i=0;i<10;i++){
 				ThreatsObject* gChimney = gListChimney.at (i);
 				if (gChimney!=NULL){
@@ -102,18 +88,16 @@ int main(int argc, char* argv[])
 						SDL_Rect rectBirds = gBirds.GetRectFrame ();
 						SDL_Rect rectChimney = gChimney->GetRectFrame ();
 						gChimney->UpdateChimney ();
-
 						if (i%2==0){
 							checkPoint(rectBirds,rectChimney);
 						}
-					
 						bool check = SDLInitfunction::CheckCollision (rectBirds,rectChimney);
 						if (check){
 							Mix_PlayChannel(-1,gSoundPing,0);
 							gBirds.isDying (check,rectChimney);
 							game_over = true;
 							Save ();
-							SDL_Delay (200);
+							SDL_Delay (TIME_DELAY_WHEN_DIE);
 						}
 					} 
 					if (gBirds.getStay () == false){
@@ -123,7 +107,6 @@ int main(int argc, char* argv[])
 			}
 			gBirds.Doplayer ();
 			gBirds.Show (g_screen);	
-
 			if (gBirds.getFly ()== true) {
 				Mix_PlayChannel(-1,gSoundFly,0);
 				gBirds.setFly (false);
@@ -131,23 +114,20 @@ int main(int argc, char* argv[])
 		}
 		else 
 		{
-			textScreen[0].Render (g_screen,0);
+			textScreen[0].Render(g_screen,0);
 			gMenu.render_Clip (g_screen,MENUPOS);
 		}
-
 		ground1.UpdateGround ();
 		ground2.UpdateGround ();
 		ground1.Render (g_screen,NULL);
 		ground2.Render (g_screen,NULL);
-
-
 		if (game_over == true) {
-			if (Points > Best){
-				Best = Points;
+			if (Score > Best){
+				Best = Score;
 			}
 			gMenu.render_Clip (g_screen,SCOREBOARD);
 
-			if (gMenu.getEffect () == true && gMenu.getType () == 0 ){
+			if (gMenu.getEffect () == true && gMenu.getType () == RESTART ){
 					gMenu.render_Clip (g_screen,ERESTART);
 			}
 			else
@@ -155,7 +135,7 @@ int main(int argc, char* argv[])
 				gMenu.render_Clip (g_screen,RESTART);
 			}
 				
-			if (gMenu.getEffect () == true && gMenu.getType () == 1 ){
+			if (gMenu.getEffect () == true && gMenu.getType () == BESTSCORE ){
 				gMenu.render_Clip (g_screen,EBESTSCORE);
 			}
 			else
@@ -164,23 +144,17 @@ int main(int argc, char* argv[])
 			}
 				
 			if (gMenu.getPress () == true){
-				
 				gMenu.render_Clip (g_screen,BOARD);
-				LoadMedia (35);
-				
+				LoadMedia (SMALL_SIZE_FONT);
 			}
 		}
-	
-
 		SDL_RenderPresent (g_screen);
-
 		int real_imp_time = fpsTimer.get_ticks (); // thoi gian chay het 1 lan
-		int time_one_frame = 1000/40; //ms
+		int time_one_frame = 1000/FPS; //ms
 		if (real_imp_time < time_one_frame){
 			int delay_time = time_one_frame - real_imp_time;
 			SDL_Delay(delay_time);
 		}
-		
 	}
 	Close ();
 	return 0;
@@ -198,7 +172,6 @@ bool Init(){
 	g_window = SDL_CreateWindow ("Flappy Bird", SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,SCREEN_HEIGHT,
 		SDL_WINDOW_SHOWN);
-
 	if (g_window == NULL){
 		success = false;
 	}
@@ -213,18 +186,15 @@ bool Init(){
 			if (!(IMG_Init (imgFlags)&&imgFlags))
 				success = false;
 		}
-
-
 		if( TTF_Init() == -1 )
 		{
 			printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
 			success = false;
 		}
-
 		if (Mix_OpenAudio (44100, MIX_DEFAULT_FORMAT,2,2048 ) < 0){
 			success = false;
 		}
-
+		// Load Sound
 		gSoundFly = Mix_LoadWAV("audio/fap.wav");
 		gSoundPing = Mix_LoadWAV("audio/fall.wav");
 		gSoundScore = Mix_LoadWAV("audio/getpoint.wav");
@@ -232,7 +202,6 @@ bool Init(){
 	return success;
 }
 
-// Load hinh nen
 bool loadBackground(){
 	bool ret = gBackground.LoadImg ("img/background.png",g_screen);
 	if (ret == false)
@@ -241,20 +210,17 @@ bool loadBackground(){
 	return true;
 }
 
-
-
-
 std::vector<ThreatsObject*> CreatListChimney()
 {
 	std::vector<ThreatsObject*> listChimney;
-	ThreatsObject* listChimneyStatic = new ThreatsObject[10];
+	ThreatsObject* listChimneyStatic = new ThreatsObject[AMOUNT_OF_CHIMNEY];
 	
-	for (int i = 0;i<10;i+=2){
-		ThreatsObject* gChimney = (listChimneyStatic+i);
-		ThreatsObject* gChimney2 = (listChimneyStatic+i+1);
+	for (int numberChimney = 0;numberChimney<AMOUNT_OF_CHIMNEY;numberChimney+=2){
+		ThreatsObject* gChimney = (listChimneyStatic+numberChimney);
+		ThreatsObject* gChimney2 = (listChimneyStatic+numberChimney+1);
 
 		if (gChimney!=NULL&&gChimney2!=NULL){
-			InitChimney(gChimney,gChimney2,i);
+			InitChimney(gChimney,gChimney2,numberChimney);
 			listChimney.push_back (gChimney);
 			listChimney.push_back (gChimney2);
 		}
@@ -262,32 +228,27 @@ std::vector<ThreatsObject*> CreatListChimney()
 	return listChimney;
 }
 
-
-void InitChimney(ThreatsObject* gChimney,ThreatsObject* gChimney2,int index){
+void InitChimney(ThreatsObject* gChimney,ThreatsObject* gChimney2,int numChimney){
 	
 	int randomNumberY = rand()%5;
 	int moveY = ARRAYMOVEY[randomNumberY];
 
 	gChimney->LoadImgchimney ("img/chimney_.png",g_screen);
-	gChimney->setPosX (index*100+500);
-	gChimney->setPosY (-200+50*moveY);
+	gChimney->setPosX (numChimney*POSX_DISTANCE_CHIMNEY+POSX0_CHIMNEY);
+	gChimney->setPosY (POSY0_CHIMNEY_UPON+POSY_MOVE_CHIMNEY*moveY);
 	
 	gChimney2->LoadImgchimney ("img/chimney.png",g_screen);
-	gChimney2->setPosX (index*100+500);
-	gChimney2->setPosY (400+50*moveY);
-
-	
+	gChimney2->setPosX (numChimney*POSX_DISTANCE_CHIMNEY+POSX0_CHIMNEY);
+	gChimney2->setPosY (POSY0_CHIMNEY_BELOW+POSY_MOVE_CHIMNEY*moveY);
 }
 
 void Close(){
 	gBackground.Free ();
 	gMenu.Free ();
-	
 	SDL_DestroyRenderer (g_screen);
 	g_screen = NULL;
 	SDL_DestroyWindow (g_window);
 	g_window = NULL;
-
 	IMG_Quit ();
 	SDL_Quit();
 }
@@ -300,10 +261,9 @@ bool LoadMedia (int size){
 }
 void checkPoint(SDL_Rect rectBirds,SDL_Rect rectChimney){
 	if (rectChimney.x == rectBirds.x){
-		Points++;
+		Score++;
 		Mix_PlayChannel(-1, gSoundScore,0);
 	}
-
 }
 
 void BestPlayer (){
@@ -317,19 +277,21 @@ void BestPlayer (){
 	Best = BestPoins[2];
 }
 
-void Save(){
-	if (Points >= BestPoins[2]){
+void AddPoints(){
+	if (Score >= BestPoins[2]){
 		BestPoins[0] = BestPoins[1];
 		BestPoins[1] = BestPoins[2];
-		BestPoins[2] = Points;
+		BestPoins[2] = Score;
 	}
-	else if (Points >= BestPoins[1]){
+	else if (Score >= BestPoins[1]){
 		BestPoins[0] = BestPoins[1];
-		BestPoins[1] = Points;
+		BestPoins[1] = Score;
 	}
-	else if (Points >= BestPoins[0]) BestPoins [0] = Points;
+	else if (Score >= BestPoins[0]) BestPoins [0] = Score;
+}
 
-
+void Save(){
+	AddPoints();
 	std::ofstream pfileout;
 	pfileout.open ("Best.txt");
 	for (int i=0;i<3;i++){
@@ -340,21 +302,15 @@ void Save(){
 }
 
 
-void InitObject(){
-
+bool InitObject(){
 	BestPlayer ();
-	//Tao doi tuong Bird
-
 	gBirds.SetRect (POSX_START,POSY_START);
 	gBirds.LoadImg ("img/bird_sprite.png", g_screen);
 	gBirds.set_clip ();
-
-
-	//Tao doi tuong dat nen
-
-	//DANH SACH CHIMNEY
 	gListChimney = CreatListChimney(); 
-
+	if (gListChimney.size ()==0)
+		return false;
+	return true;
 }
 
 void HandleEventMenu(SDL_Event g_event,SDL_Renderer* g_screen){
@@ -364,7 +320,6 @@ void HandleEventMenu(SDL_Event g_event,SDL_Renderer* g_screen){
 			if (gControl.is_started () == false){
 				gControl.start();	
 			}
-
 			if (gMenu.getPress () == true){
 				gMenu.setPress (false);
 			}
@@ -376,13 +331,12 @@ void HandleEventMenu(SDL_Event g_event,SDL_Renderer* g_screen){
 
 	if (g_event.type == SDL_MOUSEBUTTONDOWN){
 		if (g_event.button.button == SDL_BUTTON_LEFT && game_over == true ){
-
 			if (gMenu.Motion (g_event,RESTART) == true ){
 				game_over = false;
 				gBirds.setIsDied (false);
 				gBirds.setStay (true);
-				gListChimney.erase (gListChimney.begin (),gListChimney.begin()+10);
-				Points = 0;
+				gListChimney.erase (gListChimney.begin (),gListChimney.begin()+AMOUNT_OF_CHIMNEY);
+				Score = 0;
 				InitObject ();
 			}
 			else if (gMenu.Motion (g_event,BESTSCORE) == true )
@@ -396,13 +350,11 @@ void HandleEventMenu(SDL_Event g_event,SDL_Renderer* g_screen){
 	if (g_event.type == SDL_MOUSEMOTION && game_over == true){
 		if (gMenu.Motion(g_event, RESTART) == true ){
 			gMenu.setEffect (true);
-			gMenu.setType (0);
+			gMenu.setType (RESTART);
 		}
-
-
 		else if (gMenu.Motion(g_event, BESTSCORE) == true ){
 			gMenu.setEffect (true);
-			gMenu.setType (1);
+			gMenu.setType (BESTSCORE);
 		}
 		else
 		{

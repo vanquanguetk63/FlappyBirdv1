@@ -23,7 +23,6 @@ bool TextObject::LoadFromRenderText (TTF_Font* gFont, SDL_Renderer* screen){
 
 		SDL_FreeSurface (textSurface);
 	}
-
 	return texture != NULL;
 }
 
@@ -56,11 +55,11 @@ void TextObject::setRectText(int numberText){
 	switch (numberText)
 	{
 	case 0: 
-		posText[0].x = SCREEN_WIDTH/2-155;
+		posText[0].x = SCREEN_WIDTH/2-145;
 		posText[0].y = SCREEN_HEIGHT/2-225;
 		break;
 	case 1: 
-		posText[1].x = 0;
+		posText[1].x = 5;
 		posText[1].y = 0;
 		break;
 	case 2: 

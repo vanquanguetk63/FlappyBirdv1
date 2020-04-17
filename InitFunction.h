@@ -47,10 +47,18 @@ enum numMenu
 	BOARD = 6,
 };
 
-static int Points = 0;
+const int FPS = 40;
+const int TIME_DELAY_WHEN_DIE = 200;
+const int BIG_SIZE_FONT = 50;
+const int SMALL_SIZE_FONT  = 35;
+
+static int Score = 0;
 static int Best = 0;
 static int BestPoins[3];
 
+//TEXT
+const std::string textMenu = "FLAPPY BIRD";
+const std::string textScore = "Score";
 //EVENT MOUSE
 const int UNPRESSED = 0;
 const int PRESSED = 1;
@@ -72,6 +80,12 @@ const int DEGREE_ROTATION = 15;
 
 //CHIMNEY
 const int POSX_CHIMNEY_RETURNED = 930;
+const int AMOUNT_OF_CHIMNEY = 10;
+const int POSX0_CHIMNEY = 500;
+const int POSX_DISTANCE_CHIMNEY = 100;
+const int POSY0_CHIMNEY_UPON = -200;
+const int POSY0_CHIMNEY_BELOW = 400;
+const int POSY_MOVE_CHIMNEY = 50;
 
 enum MOVE_Y_POSITION
 {
@@ -90,7 +104,6 @@ ARRAY_MOVE_POS5};
 typedef struct Input{
 	int up;
 };
-
 
 namespace SDLInitfunction{
 	bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
