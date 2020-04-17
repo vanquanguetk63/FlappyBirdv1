@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
 			gMenu.render_Clip (g_screen,SCOREBOARD);
 
 			if (gMenu.getEffect () == true && gMenu.getType () == RESTART ){
-					gMenu.render_Clip (g_screen,ERESTART);
+				gMenu.render_Clip (g_screen,ERESTART);
 			}
 			else
 			{
@@ -154,7 +154,6 @@ int main(int argc, char* argv[])
 			{
 				gMenu.render_Clip (g_screen,BESTSCORE);
 			}
-			
 			
 			textScreen[OVER].Render (g_screen,OVER);
 
@@ -305,13 +304,14 @@ void HandleEventMenu(SDL_Event g_event,SDL_Renderer* g_screen){
 				gMenu.setPress (false);
 			}
 			break;
+
 		default:
 			break;
 		}
 	}
-	if (g_event.type == SDL_MOUSEBUTTONDOWN){
-		if (g_event.button.button == SDL_BUTTON_LEFT && game_over == true ){
-			if (gMenu.Motion (g_event,RESTART) == true ){
+	if (g_event.type == SDL_MOUSEBUTTONDOWN ){
+		if (g_event.button.button == SDL_BUTTON_LEFT && gMenu.getPress ()  == false ){
+			if (gMenu.Motion (g_event,RESTART) == true  ){
 				game_over = false;
 				gBirds.setIsDied (false);
 				gBirds.setStay (true);
@@ -326,7 +326,7 @@ void HandleEventMenu(SDL_Event g_event,SDL_Renderer* g_screen){
 			}
 		}
 	}
-	if (g_event.type == SDL_MOUSEMOTION && game_over == true){
+	if (g_event.type == SDL_MOUSEMOTION && game_over == true  && gMenu.getPress ()  == false){
 		if (gMenu.Motion(g_event, RESTART) == true ){
 			gMenu.setEffect (true);
 			gMenu.setType (RESTART);
@@ -346,9 +346,7 @@ void checkPoint(SDL_Rect rectBirds,SDL_Rect rectChimney){
 	if (rectChimney.x == rectBirds.x){
 		Score++;
 		Mix_PlayChannel(-1, gSoundScore,0);
-
 	}
-
 }
 
 bool LoadMedia (int size){

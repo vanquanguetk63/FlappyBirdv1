@@ -24,7 +24,7 @@ public:
 	void setIsDied(const bool& isDied_) {isDied = isDied_;}
 
 	void setYvalue(const int& yval_) {yValue = yval_;}
-
+	float getYvalue() const {return yValue;}
 
 	void setStay(const bool& stay_) {stayed = stay_;}
 	bool getStay() const {return stayed;}
