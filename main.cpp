@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 			for (int num=0;num<AMOUNT_OF_CHIMNEY;num++){
 				ThreatsObject* gChimney = gListChimney.at (num);
 				if (gChimney!=NULL){
-					if (game_over == false ){
+					if (game_over == false && gBirds.getStay() == false){
 						SDL_Rect rectBirds = gBirds.GetRectFrame ();
 						SDL_Rect rectChimney = gChimney->GetRectFrame ();
 						gChimney->UpdateChimney ();
