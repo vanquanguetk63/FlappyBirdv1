@@ -12,11 +12,11 @@ bool SDLInitfunction::CheckCollision (const SDL_Rect& a,const  SDL_Rect& b){
 	//Calculate the sides of rect A
 	leftA = a.x;
 	rightA = a.x + a.w;
-	topA = a.y;
-	bottomA = a.y + a.h;
+	topA = a.y+5;
+	bottomA = a.y + a.h-5;
 
 	//Calculate the sides of rect B
-	leftB = b.x + 5;
+	leftB = b.x+5;
 	rightB = b.x + b.w;
 	topB = b.y;
 	bottomB = b.y + b.h;
