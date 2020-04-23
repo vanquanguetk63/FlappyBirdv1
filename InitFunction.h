@@ -49,8 +49,8 @@ enum numMenu
 
 const int FPS = 40;
 const int TIME_DELAY_WHEN_DIE = 200;
-const int BIG_SIZE_FONT = 50;
-const int SMALL_SIZE_FONT  = 35;
+const int BIG_SIZE_FONT = 60;
+const int SMALL_SIZE_FONT  = 40;
 
 //EVENT MOUSE
 const int UNPRESSED = 0;
@@ -64,7 +64,7 @@ static int GROUND_POS_X2 = 830;
 static int GROUND_POS_Y = 540;
 
 //BIRDS
-const int FRAME_BIRDS = 3; 
+const int FRAME_BIRDS = 4; 
 const int POSX_START = 200;
 const int POSY_START = 250;
 const int POWER_FLY = 10;
@@ -98,7 +98,7 @@ const int ARRAYMOVEY[ARRAY_MOVE_NUM] = {ARRAY_MOVE_POS1,ARRAY_MOVE_POS2,
 
 //TEXT
 const std::string textMenu = "FLAPPY BIRD";
-const std::string textOver = "GAMEOVER";
+const std::string textOver = "GAME OVER";
 const std::string textPTS = " ptS";
 const int totalText = 8;
 enum textOBJ
@@ -113,13 +113,13 @@ enum textOBJ
 	BEST3 = 7,
 };
 //RECT TEXT
-const int X_MENU = SCREEN_WIDTH/2-145;
+const int X_MENU = SCREEN_WIDTH/2-160;
 const int Y_MENU = SCREEN_HEIGHT/2-225;
 
 const int X_SCORE = 5;
 const int Y_SCORE = 0;
 
-const int X_OVER = 260;
+const int X_OVER = 240;
 const int Y_OVER = 50;
 
 const int X_SCOREFINAL = 490;
@@ -152,7 +152,6 @@ typedef struct Input{
 
 namespace SDLInitfunction{
 	bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
-	void  BestPlayer(int best[3]);
 }
 
 #endif

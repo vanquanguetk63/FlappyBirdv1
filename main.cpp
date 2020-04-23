@@ -155,6 +155,7 @@ int main(int argc, char* argv[])
 				gMenu.render_Clip (g_screen,BESTSCORE);
 			}
 			
+			LoadMedia (BIG_SIZE_FONT);
 			textScreen[OVER].Render (g_screen,OVER);
 
 			std::string scoreFinal = std::to_string (Score);
@@ -252,6 +253,7 @@ bool loadBackground(){
 
 bool InitObject(){
 	BestPlayer ();
+	gBirds.setDegree (0);
 	gBirds.SetRect (POSX_START,POSY_START);
 	gBirds.LoadImg ("img/bird_sprite.png", g_screen);
 	gBirds.set_clip ();
@@ -394,13 +396,25 @@ void Save(){
 }
 
 void Close(){
+
 	gBackground.Free ();
 	gMenu.Free ();
+
+	TTF_CloseFont( gFont );
+	gFont = NULL;
+
+	textScreen->Free ();
+
+	Mix_FreeChunk(gSoundFly);
+	Mix_FreeChunk(gSoundPing);
+	Mix_FreeChunk(gSoundScore);
+
 	SDL_DestroyRenderer (g_screen);
 	g_screen = NULL;
 	SDL_DestroyWindow (g_window);
 	g_window = NULL;
 	IMG_Quit ();
+	Mix_Quit();
 	SDL_Quit();
 }
 

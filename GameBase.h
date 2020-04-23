@@ -16,9 +16,7 @@ public:
 	void Free();
 	bool loadFromRenderedText( std::string textureText, SDL_Color textColor,TTF_Font *gFont ,SDL_Renderer* screen);
 	
-	void render( int x, int y, SDL_Rect* clip = NULL, 
-			double angle = 0.0, SDL_Point* center = NULL,
-			SDL_RendererFlip flip = SDL_FLIP_NONE ); 
+	
 
 protected:
 	SDL_Texture* p_object;

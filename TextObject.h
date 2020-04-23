@@ -12,8 +12,6 @@ public:
 	bool loadMedia(std::string path);
 	bool LoadFromRenderText(TTF_Font* gFont, SDL_Renderer* screen);
 	void Free();
-	void setColor(Uint8 red,Uint8 green, Uint8 blue);
-
 	void Render(SDL_Renderer* screen, 
 				int numberText, SDL_Rect* clip = NULL,
 				double angle=0.0, SDL_Point* center = NULL,

@@ -36,7 +36,7 @@ bool BirdsObject::LoadImg (std::string path, SDL_Renderer* screen){
 	if (loadChimney){
 		xPos = rect.x;
 		yPos = rect.y;
-		widthFrame = rect.w/3;
+		widthFrame = rect.w/FRAME_BIRDS;
 		heightFrame = rect.h;
 	}
 	return loadChimney;
@@ -45,7 +45,7 @@ bool BirdsObject::LoadImg (std::string path, SDL_Renderer* screen){
 //Lay hinh anh chuyen dong
 void BirdsObject::set_clip (){
 	if (widthFrame > 0 && heightFrame >0){
-		for (int i=0;i<3;i++){
+		for (int i=0;i<FRAME_BIRDS;i++){
 			frameChimney[i].x = i*widthFrame;
 			frameChimney[i].y = 0;
 			frameChimney[i].w = widthFrame;
@@ -60,7 +60,7 @@ void BirdsObject::Show (SDL_Renderer* des){
 		frame++;
 	}
 	
-	if (frame >=3) frame = 0;
+	if (frame >=FRAME_BIRDS) frame = 0;
 
 
 	SDL_Rect* currentClip = &frameChimney[frame];
@@ -77,7 +77,6 @@ void BirdsObject::HandleInputAction (SDL_Event events, SDL_Renderer* screen){
 				stayed = false;
 				inputType.up = PRESSED;
 				yValue = -POWER_FLY;
-				degree = -DEGREE_ROTATION;
 				fly = true;
 				
 			}
@@ -88,7 +87,7 @@ void BirdsObject::HandleInputAction (SDL_Event events, SDL_Renderer* screen){
 	}
 	else if (events.type == SDL_KEYUP){
 		inputType.up = UNPRESSED;
-		degree = DEGREE_ROTATION;
+		
 		fly = false;
 	}
 
@@ -99,8 +98,11 @@ void BirdsObject::Doplayer (){
 	if (isDied == false && stayed == false){
 		if (inputType.up == PRESSED)  {
 			yPos += yValue;
-			
+			if (degree>-30) degree-=15;
 		}
+		if (degree>90) degree=0;
+		degree+=2;
+		
 		yValue += GRAVITY;
 		yPos += yValue;
 		if (yPos + heightFrame >= SCREEN_HEIGHT ) {
@@ -117,11 +119,13 @@ void BirdsObject::Doplayer (){
 		if (yPos+heightFrame<540){
 			yPos+=15;
 		}
-		degree = 0;
+		degree +=20;
+		if (degree>90)degree=90;
 		yValue = 0;
-
 	}
 	SetRect (xPos,yPos);
+
+	
 }
 
 void BirdsObject::isDying (bool Check, SDL_Rect chimney){

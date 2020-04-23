@@ -16,7 +16,6 @@ public:
 	void setPosX(const int& xpos_) { xPos = xpos_;}
 	int  getPosX() const{ return xPos;}
 	void setPosY(const int& ypos_) {yPos = ypos_;}
-	int getPosY() const {return yPos;} 
 
 	void setPosxy(const int& xPos_, const int& yPos_);
 

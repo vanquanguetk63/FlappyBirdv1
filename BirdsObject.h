@@ -17,7 +17,6 @@ public:
 	SDL_Rect GetRectFrame();
 	void setDegree(double degree_) {degree = degree_;}
 	void isDying(bool Check, SDL_Rect chimney);
-	float getPosY() const {return yPos;}
 	void checkMoving(SDL_Rect* chimney);
 
 	bool getIsDied() const {return isDied;}

@@ -33,12 +33,6 @@ void TextObject::Free (){
 	}
 }
 
-void TextObject::setColor (Uint8 red,Uint8 green, Uint8 blue){
-	textColor.r = red;
-	textColor.g = green;
-	textColor.b = blue;
-}
-
 
 void TextObject::Render (SDL_Renderer* screen, int numberText, SDL_Rect* clip /* = NULL */, double angle/* =0.0 */, SDL_Point* center /* = NULL */, SDL_RendererFlip flip /* = SDL_FLIP_NONE */){
 	setRectText (numberText);

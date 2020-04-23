@@ -19,40 +19,40 @@ bool MenuGame::LoadImg (std::string path, SDL_Renderer* screen){
 }
 
 void MenuGame::setClip (){
-	gSprite[0].x = 0;
-	gSprite[0].y = 0;
-	gSprite[0].w = 435;
-	gSprite[0].h = 260;
+	gSprite[MENUPOS].x = 0;
+	gSprite[MENUPOS].y = 0;
+	gSprite[MENUPOS].w = 435;
+	gSprite[MENUPOS].h = 260;
 
-	gSprite[1].x = 0;
-	gSprite[1].y = 270;
-	gSprite[1].w = 410;
-	gSprite[1].h = 235;
+	gSprite[SCOREBOARD].x = 0;
+	gSprite[SCOREBOARD].y = 270;
+	gSprite[SCOREBOARD].w = 410;
+	gSprite[SCOREBOARD].h = 235;
 
-	gSprite[2].x = 0;
-	gSprite[2].y = 520;
-	gSprite[2].w = 160;
-	gSprite[2].h = 100;
+	gSprite[RESTART].x = 0;
+	gSprite[RESTART].y = 520;
+	gSprite[RESTART].w = 160;
+	gSprite[RESTART].h = 100;
 
-	gSprite[3].x = 168;
-	gSprite[3].y = 520;
-	gSprite[3].w = 162;
-	gSprite[3].h = 100;
+	gSprite[BESTSCORE].x = 168;
+	gSprite[BESTSCORE].y = 520;
+	gSprite[BESTSCORE].w = 162;
+	gSprite[BESTSCORE].h = 100;
 
-	gSprite[4].x = 0;
-	gSprite[4].y = 635;
-	gSprite[4].w = 160;
-	gSprite[4].h = 100;
+	gSprite[ERESTART].x = 0;
+	gSprite[ERESTART].y = 635;
+	gSprite[ERESTART].w = 160;
+	gSprite[ERESTART].h = 100;
 
-	gSprite[5].x = 168;
-	gSprite[5].y = 635;
-	gSprite[5].w = 162;
-	gSprite[5].h = 100;
+	gSprite[EBESTSCORE].x = 168;
+	gSprite[EBESTSCORE].y = 635;
+	gSprite[EBESTSCORE].w = 162;
+	gSprite[EBESTSCORE].h = 100;
 
-	gSprite[6].x = 425;
-	gSprite[6].y = 0;
-	gSprite[6].w = 320;
-	gSprite[6].h = 370;
+	gSprite[BOARD].x = 425;
+	gSprite[BOARD].y = 0;
+	gSprite[BOARD].w = 320;
+	gSprite[BOARD].h = 370;
 }
 
 void MenuGame::render_Clip (SDL_Renderer* des,int numberMenu){
