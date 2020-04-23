@@ -10,7 +10,7 @@ bool SDLInitfunction::CheckCollision (const SDL_Rect& a,const  SDL_Rect& b){
 	int bottomA, bottomB;
 
 	//Calculate the sides of rect A
-	leftA = a.x-7;
+	leftA = a.x - 7;
 	rightA = a.x + a.w;
 	topA = a.y;
 	bottomA = a.y + a.h;
@@ -19,7 +19,7 @@ bool SDLInitfunction::CheckCollision (const SDL_Rect& a,const  SDL_Rect& b){
 	leftB = b.x;
 	rightB = b.x + b.w-5;
 	topB = b.y;
-	bottomB = b.y + b.h-5;
+	bottomB = b.y + b.h-7;
 
 
 	if (bottomA >= SCREEN_HEIGHT-100){
