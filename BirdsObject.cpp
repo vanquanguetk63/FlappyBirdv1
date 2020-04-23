@@ -55,14 +55,11 @@ void BirdsObject::set_clip (){
 }
 
 void BirdsObject::Show (SDL_Renderer* des){
-
-	if (stayed == false && isDied == false && inputType.up == 1){
+	
+	if (fly == true && isDied == false && inputType.up == 1){
 		frame++;
 	}
-	
 	if (frame >=FRAME_BIRDS) frame = 0;
-
-
 	SDL_Rect* currentClip = &frameChimney[frame];
 	SDL_Rect renderQuad = {rect.x, rect.y, widthFrame, heightFrame};
 	SDL_RenderCopyEx (des, p_object,currentClip,&renderQuad,degree,NULL,SDL_FLIP_NONE);
@@ -86,9 +83,19 @@ void BirdsObject::HandleInputAction (SDL_Event events, SDL_Renderer* screen){
 		}
 	}
 	else if (events.type == SDL_KEYUP){
-		inputType.up = UNPRESSED;
+		switch (events.key.keysym.sym )
+		{
+		case SDLK_SPACE:
+			{
+				inputType.up = UNPRESSED;
+				fly = false;
+
+			}
+			break;
+		default:
+			break;
+		}
 		
-		fly = false;
 	}
 
 	
