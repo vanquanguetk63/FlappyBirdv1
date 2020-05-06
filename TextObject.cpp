@@ -80,6 +80,11 @@ void TextObject::setRectText(int numberText){
 		posText[BEST3].x = X_BEST3;
 		posText[BEST3].y = Y_BEST3;
 		break;
+
+	case 8: 
+		posText[Back].x = X_Back;
+		posText[Back].y = Y_Back;
+		break;
 		
 	default:
 		break;

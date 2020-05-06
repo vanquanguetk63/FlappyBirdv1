@@ -100,7 +100,8 @@ const int ARRAYMOVEY[ARRAY_MOVE_NUM] = {ARRAY_MOVE_POS1,ARRAY_MOVE_POS2,
 const std::string textMenu = "FLAPPY BIRD";
 const std::string textOver = "GAME OVER";
 const std::string textPTS = " ptS";
-const int totalText = 8;
+const std::string textBack = "Press SPACE To Exit Ranking Board";
+const int totalText = 9;
 enum textOBJ
 {
 	MENU = 0,
@@ -111,6 +112,7 @@ enum textOBJ
 	BEST1 = 5,
 	BEST2 = 6,
 	BEST3 = 7,
+	Back = 8,
 };
 //RECT TEXT
 const int X_MENU = SCREEN_WIDTH/2-160;
@@ -136,6 +138,9 @@ const int Y_BEST2 = 275;
 
 const int X_BEST3 = 380;
 const int Y_BEST3 = 320;
+
+const int X_Back = 50;
+const int Y_Back = 475;
 
 //BEST
 const int totalRank = 3;

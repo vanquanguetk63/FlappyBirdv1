@@ -69,6 +69,8 @@ int main(int argc, char* argv[])
 	textScreen[OVER].SetText (textOver);
 	textScreen[OVER].LoadFromRenderText (gFont,g_screen);
 	
+	
+
 	bool isQuit = false;
 	while (!isQuit){
 		// Su kien ban phim
@@ -189,6 +191,10 @@ int main(int argc, char* argv[])
 				textScreen[BEST3].SetText (Best3);
 				textScreen[BEST3].LoadFromRenderText (gFont,g_screen);
 				textScreen[BEST3].Render (g_screen,BEST3);	
+	
+				textScreen[Back].SetText (textBack);
+				textScreen[Back].LoadFromRenderText (gFont,g_screen);
+				textScreen[Back].Render (g_screen,Back);
 			}
 		}
 		SDL_RenderPresent (g_screen);
