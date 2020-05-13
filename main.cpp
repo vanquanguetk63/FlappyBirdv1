@@ -46,6 +46,7 @@ int main(int argc, char* argv[])
 {
 	ImpTimer fpsTimer;
 
+	//INIT MAN HINH
 	if (!Init ())
 		return -1;
 	if (!loadBackground ())
@@ -54,22 +55,25 @@ int main(int argc, char* argv[])
 		return -1;
 	if (!InitObject())
 		return -1;
-	gMenu.LoadImg ("img/GameMenu.png",g_screen); //Load Menu
+
+	//MENU
+	gMenu.LoadImg ("img/GameMenu.png",g_screen); 
 	gMenu.setClip ();
-	ThreatsObject ground1;	//Load ground
+
+	//TAO GROUND
+	ThreatsObject ground1;	
 	ThreatsObject ground2;
 	ground1.LoadImgground ("img/ground.png",g_screen);
 	ground1.setPosxy (GROUND_POS_X1,GROUND_POS_Y);
 	ground2.LoadImgground ("img/ground.png",g_screen);
 	ground2.setPosxy (GROUND_POS_X2,GROUND_POS_Y);
+
 	//Text
 	LoadMedia (BIG_SIZE_FONT);
 	textScreen[MENU].SetText (textMenu);
 	textScreen[MENU].LoadFromRenderText (gFont,g_screen);
 	textScreen[OVER].SetText (textOver);
 	textScreen[OVER].LoadFromRenderText (gFont,g_screen);
-	
-	
 
 	bool isQuit = false;
 	while (!isQuit){
@@ -84,10 +88,15 @@ int main(int argc, char* argv[])
 		}
 		SDL_SetRenderDrawColor (g_screen,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR);
 		SDL_RenderClear (g_screen);
-		gBackground.Render (g_screen,NULL); 	//RENDER ANH BACKGROUND
-		fpsTimer.start ();					//chay thoi gian
-		if (gControl.is_started ()){ 		//RENDER VA UPDATE CAC DOI TUONG 
-			for (int num=0;num<AMOUNT_OF_CHIMNEY;num++){
+
+		//RENDER ANH BACKGROUND
+		gBackground.Render (g_screen,NULL); 	
+		fpsTimer.start ();				
+
+		//RENDER VA UPDATE CAC DOI TUONG 
+		if (gControl.is_started ()){ 		
+			for (int num=0; num<AMOUNT_OF_CHIMNEY ; num++){
+				//TAO CAC DUONG ONG
 				ThreatsObject* gChimney = gListChimney.at (num);
 				if (gChimney!=NULL){
 					if (game_over == false && gBirds.getStay() == false){
@@ -98,6 +107,8 @@ int main(int argc, char* argv[])
 							checkPoint(rectBirds,rectChimney);
 							
 						}
+
+						//CHECK VA CHAM
 						bool check = SDLInitfunction::CheckCollision (rectBirds,rectChimney);
 						if (check){
 							Mix_PlayChannel(-1,gSoundPing,0);
@@ -106,6 +117,8 @@ int main(int argc, char* argv[])
 							Save ();
 							SDL_Delay (TIME_DELAY_WHEN_DIE);
 						}
+
+						//TAO TEXT SCORE
 						std::string textScore = "SCORE ";
 						std::string score = std::to_string (Score);
 						textScore += score;
@@ -118,6 +131,7 @@ int main(int argc, char* argv[])
 					}
 				}
 			}
+			//CHUYEN DONG CUA BIRD
 			gBirds.Doplayer ();
 			gBirds.Show (g_screen);	
 			if (gBirds.getFly ()== true) {
@@ -131,10 +145,13 @@ int main(int argc, char* argv[])
 			textScreen[MENU].Render(g_screen,MENU);
 			gMenu.render_Clip (g_screen,MENUPOS);
 		}
+		//CHUYEN DONG MAT DAT
 		ground1.UpdateGround ();
 		ground2.UpdateGround ();
 		ground1.Render (g_screen,NULL);
 		ground2.Render (g_screen,NULL);
+
+		//PHAN BIRD DIE
 		if (game_over == true) {
 			if (Score > Best){
 				Best = Score;
@@ -157,6 +174,7 @@ int main(int argc, char* argv[])
 				gMenu.render_Clip (g_screen,BESTSCORE);
 			}
 			
+			//LOAD TEXT OVER
 			LoadMedia (BIG_SIZE_FONT);
 			textScreen[OVER].Render (g_screen,OVER);
 
@@ -170,6 +188,7 @@ int main(int argc, char* argv[])
 			textScreen[BEST].LoadFromRenderText (gFont,g_screen);
 			textScreen[BEST].Render (g_screen,BEST);
 
+			//BANG RANKING
 			if (gMenu.getPress () == true){
 				gMenu.render_Clip (g_screen,BOARD);
 				LoadMedia (SMALL_SIZE_FONT);
@@ -288,7 +307,6 @@ std::vector<ThreatsObject*> CreatListChimney()
 }
 
 void InitChimney(ThreatsObject* gChimney,ThreatsObject* gChimney2,int numChimney){
-	
 	int randomNumberY = rand()%5;
 	int moveY = ARRAYMOVEY[randomNumberY];
 

@@ -1,13 +1,38 @@
-﻿Build started 04/23/2020 12:01:21 PM.
+﻿Build started 05/07/2020 12:48:34 AM.
      1>Project "C:\Users\Van Quang\Desktop\FlappyBirdv1\FlappyBirdv1\FlappyBirdv1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\FlappyBirdv1.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt InitFunction.cpp MenuGame.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\FlappyBirdv1.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BirdsObject.cpp GameBase.cpp ImpTimer.cpp InitFunction.cpp MenuGame.cpp TextObject.cpp ThreatsObject.cpp main.cpp
+         main.cpp
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(71): warning C4305: 'initializing' : truncation from 'double' to 'const float'
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(156): warning C4091: 'typedef ' : ignored on left of 'Input' when no variable is declared
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\birdsobject.h(25): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+         Generating Code...
+         Compiling...
+         ThreatsObject.cpp
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(71): warning C4305: 'initializing' : truncation from 'double' to 'const float'
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(156): warning C4091: 'typedef ' : ignored on left of 'Input' when no variable is declared
+         TextObject.cpp
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(71): warning C4305: 'initializing' : truncation from 'double' to 'const float'
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(156): warning C4091: 'typedef ' : ignored on left of 'Input' when no variable is declared
          MenuGame.cpp
      1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(71): warning C4305: 'initializing' : truncation from 'double' to 'const float'
-     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(151): warning C4091: 'typedef ' : ignored on left of 'Input' when no variable is declared
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(156): warning C4091: 'typedef ' : ignored on left of 'Input' when no variable is declared
          InitFunction.cpp
      1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(71): warning C4305: 'initializing' : truncation from 'double' to 'const float'
-     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(151): warning C4091: 'typedef ' : ignored on left of 'Input' when no variable is declared
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(156): warning C4091: 'typedef ' : ignored on left of 'Input' when no variable is declared
+         ImpTimer.cpp
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(71): warning C4305: 'initializing' : truncation from 'double' to 'const float'
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(156): warning C4091: 'typedef ' : ignored on left of 'Input' when no variable is declared
+         GameBase.cpp
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(71): warning C4305: 'initializing' : truncation from 'double' to 'const float'
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(156): warning C4091: 'typedef ' : ignored on left of 'Input' when no variable is declared
+         BirdsObject.cpp
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(71): warning C4305: 'initializing' : truncation from 'double' to 'const float'
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\initfunction.h(156): warning C4091: 'typedef ' : ignored on left of 'Input' when no variable is declared
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\birdsobject.h(25): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\birdsobject.cpp(37): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\birdsobject.cpp(38): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\van quang\desktop\flappybirdv1\flappybirdv1\birdsobject.cpp(133): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
          Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Van Quang\Desktop\FlappyBirdv1\Debug\FlappyBirdv1.exe" /INCREMENTAL /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_mixer.lib SDL2_ttf.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Van Quang\Desktop\FlappyBirdv1\Debug\FlappyBirdv1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Van Quang\Desktop\FlappyBirdv1\Debug\FlappyBirdv1.lib" /MACHINE:X86 Debug\BirdsObject.obj
@@ -24,4 +49,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.55
+Time Elapsed 00:00:08.53
